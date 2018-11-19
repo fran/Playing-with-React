@@ -1,18 +1,21 @@
 
 class ProductList extends React.Component {
+    // Refactoring: Use Initializer property.
+    state = {
+      products: [],
+    };
     constructor(props) {
         super(props);
 
-        this.state = {
-            products: [],
-        };
         this.handleProductUpVote = this.handleProductUpVote.bind(this);
     }
 
     componentDidMount() {
         this.setState({ products: Seed.products})
     }
-    handleProductUpVote(productId) {
+
+    // Refactoring: Use Initializer property.
+    handleProductUpVote = (productId) => {
         const nextProducts = this.state.products.map((product) => {
            if (product.id === productId) {
                return Object.assign({}, product, {
@@ -26,7 +29,7 @@ class ProductList extends React.Component {
         this.setState({
             products: nextProducts,
         });
-    }
+    };
 
     render() {
         const products = this.state.products.sort((a,b) =>(
@@ -54,16 +57,11 @@ class ProductList extends React.Component {
 }
 
 class Product extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.handleUpVote = this.handleUpVote.bind(this);
-    }
-
-    handleUpVote() {
-        this.props.onVote(this.props.id);
-    }
-
+    // Refactoring: Use Initializer property.
+    handleUpVote = () => (
+        this.props.onVote(this.props.id)
+    );
 
     render(){
         return (
